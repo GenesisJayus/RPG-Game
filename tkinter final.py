@@ -26,301 +26,350 @@ ndex = 0 #your energy
 window = Tk()
 window.geometry("720x480")
 window.title("Text Based RPG Game")
+window.resizable(False, False)
 
-def start():
-    wc.pack()
-    wcb.pack()
+frame = Frame(window, width= "500", height= "300", bg="grey")
 
 def dadael(*widgets):
     for widget in widgets:
         widget.destroy()
 
-def subName():
-    global name
-    name = nameEnter.get()
-    confirmed = Label(window, text = f"welcome to RPG Game {name}")
-    confBut = Button(window, text = "click to continue", command = lambda: (dadael(confirmed, confBut), atribUp()))
-    confirmed.pack()
-    confBut.pack()
-
-    
-
-
-def Phase2():
-    cc.pack() 
-    nameEnter.pack()
-    nameOk.pack()
 
 #------Phase 1--------
-wc = Label(window, text = "Welcome to the RPG Game ^^ \n \n Click the button below to Start the game")
-wcb = Button(window, text = "Start Game ->", command = lambda: (dadael(wc, wcb), Phase2()))
+def start():
+    window.columnconfigure((0,1,2), weight=1)
+    window.rowconfigure((0,1,2,3,5,6), weight=1)
+    wc.grid(column=1, row= 2)
+    wcb.grid(column=1, row= 2, sticky = "s", pady= (0,80))
+
+wp = PhotoImage(file="Intro Screen.png")
+wc = Label(window, image=wp)
+wcb = Button(window, text = "Start Game", font = ("ancient", 20), command = lambda: (dadael(wc, wcb), Phase2()))
 
 #-------Phase 2--------
 
 #-------2a-------
-cc = Label(window, text = "May I know your name Player?")
+
+def Phase2():
+    window.columnconfigure((0,1,2,3,4), weight= 1)
+    window.rowconfigure((0,1,2,3,4,5,6,7,8,9,), weight= 1)
+    ccPhoto.grid(column= 0, row=0)
+    cc.grid(column= 0, row=0, padx= (140,0), pady= (300,0)) 
+    nameEnter.pack(column= 0, row=0)
+    nameOk.pack(column= 0, row=0)
+
+
+
+ccp = PhotoImage(file= "Character creation Screen.png")
+ccPhoto = Label(window, image=ccp)
+cc = Label(window, text = "Name: ")
 nameEnter = Entry(window)
 nameOk = Button(window, text = "Confirm", command = lambda: (subName(), dadael(cc, nameEnter, nameOk)))
 
 #-------2b-------
 #-------------------------------
-
+acl = Label(window, text="")
+bcl = Label(window, text="")
+ccl = Label(window, text="")
 
 def noAp():
-    noAp = Label(window, text="You don't have enough atribute points")
-    noAp.grid(column= 3, row=10, columnspan = 6, sticky= "se")
-    window.after(1500, lambda: dadael(noAp))
+    noAp = Label(frame, text="You don't have enough\n atribute points")
+    noAp.grid(column= 3, row=10, columnspan = 3, rowspan= 2, sticky= 'e', padx= (0,20))
+    frame.after(1500, lambda: dadael(noAp))
 
-atribPoints = Label(window, text=f"Atrribute Points Remaining {ap}")
+atribPoints = Label(frame, text=f"Atrribute Points Remaining {ap}")
 
 #---strength---
 
 def strPlus():
-    global stre, nstre, ap
+    global stre, nstre, ap, acl, bcl, ccl
     if ap != 0:
         nstre += 1
         ap -= 1
         stronk.config(text=f"+ {nstre}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     else:
         noAp()
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
 def strMinu():
-    global stre, nstre, ap
+    global stre, nstre, ap, acl, bcl, ccl
     if nstre >= 2:
         nstre -= 1
         ap += 1
         stronk.config(text=f"+ {nstre}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     elif nstre == 1:
         nstre -= 1
         ap += 1
         stronk.config(text="")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     
     
 
-strPls = Button(window, text="strength +1", command=strPlus)
-strMin = Button(window, text="strength -1", command=strMinu)
-streStat = Label(window, text = f"Strength: {stre}")
-stronk = Label(window, text=f"")
+strPls = Button(frame, text="strength +1", command=strPlus)
+strMin = Button(frame, text="strength -1", command=strMinu)
+streStat = Label(frame, text = f"Strength: {stre}")
+stronk = Label(frame, text=f"")
 
 #---defense---
 
 def dfsPlus():
-    global dfs, ndfs, ap
+    global dfs, ndfs, ap, acl, bcl, ccl
     if ap != 0:
         ndfs += 1
         ap -= 1
         tanky.config(text=f"+ {ndfs}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     else:
         noAp()
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
 def dfsMinu():
-    global dfs, ndfs, ap
+    global dfs, ndfs, ap, acl, bcl, ccl
     if ndfs >= 2:
         ndfs -= 1
         ap += 1
         tanky.config(text=f"+ {ndfs}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     elif ndfs == 1:
         ndfs -= 1
         ap += 1
         tanky.config(text=f"")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     
 
-dfsPls = Button(window, text="Defense +1", command=dfsPlus)
-dfsMin = Button(window, text="Defense -1", command=dfsMinu)
-dfsStat = Label(window, text = f"Defense: {dfs}")
-tanky = Label(window, text=f"")
-
+dfsPls = Button(frame, text="Defense +1", command=dfsPlus)
+dfsMin = Button(frame, text="Defense -1", command=dfsMinu)
+dfsStat = Label(frame, text = f"Defense: {dfs}")
+tanky = Label(frame, text=f"")
 
 #---agility---
 
 def agiPlus():
-    global agi, nagi, ap
+    global agi, nagi, ap, acl, bcl, ccl
     if ap != 0:
         nagi += 1
         ap -= 1
         nimble.config(text=f"+ {nagi}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     else:
         noAp()
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
 def agiMinu():
-    global agi, nagi, ap
+    global agi, nagi, ap, acl, bcl, ccl
     if nagi >= 2:
         nagi -= 1
         ap += 1
         nimble.config(text=f"+ {nagi}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     elif nagi == 1:
         nagi -= 1
         ap += 1
         nimble.config(text=f"")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
-agiPls = Button(window, text="Agility +1", command=agiPlus)
-agiMin = Button(window, text="Agility -1", command=agiMinu)
-agiStat = Label(window, text= f"Agility: {agi}")
-nimble = Label(window, text=f"")
+agiPls = Button(frame, text="Agility +1", command=agiPlus)
+agiMin = Button(frame, text="Agility -1", command=agiMinu)
+agiStat = Label(frame, text= f"Agility: {agi}")
+nimble = Label(frame, text=f"")
 
 
 #---vitality---
 
 def vitPlus():
-    global vit, nvit, ap
+    global vit, nvit, ap, acl, bcl, ccl
     if ap != 0:
         nvit += 1
         ap -= 1
         healthy.config(text=f"+ {nvit}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     else:
         noAp()
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
 def vitMinu():
-    global vit, nvit, ap
+    global vit, nvit, ap, acl, bcl, ccl
     if nvit >= 2:
         nvit -= 1
         ap += 1
         healthy.config(text=f"+ {nvit}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     elif nvit == 1:
         nvit -= 1
         ap += 1
         healthy.config(text=f"")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
 
-vitPls = Button(window, text="Vitality +1", command=vitPlus)
-vitMin = Button(window, text="Vitality -1", command=vitMinu)
-vitStat = Label(window, text = f"Vitality: {vit}")
-healthy = Label(window, text=f"")
+vitPls = Button(frame, text="Vitality +1", command=vitPlus)
+vitMin = Button(frame, text="Vitality -1", command=vitMinu)
+vitStat = Label(frame, text = f"Vitality: {vit}")
+healthy = Label(frame, text=f"")
 
 
 #---intelligence---
 
 def itlPlus():
-    global itl, nitl, ap
+    global itl, nitl, ap, acl, bcl, ccl
     if ap != 0:
         nitl += 1
         ap -= 1
         smart.config(text=f"+ {nitl}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     else:
         noAp()
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
 def itlMinu():
-    global itl, nitl, ap
+    global itl, nitl, ap, acl, bcl, ccl
     if nitl >= 2:
         nitl -= 1
         ap += 1
         smart.config(text=f"+ {nitl}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     elif nitl == 1:
         nitl -= 1
         ap += 1
         smart.config(text=f"")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     
 
-itlPls = Button(window, text="Intelligence +1", command=itlPlus)
-itlMin = Button(window, text="Intelligence -1", command=itlMinu)
-itlStat = Label(window, text = f"Intelligence: {itl}")
-smart = Label(window, text=f"")
+itlPls = Button(frame, text="Intelligence +1", command=itlPlus)
+itlMin = Button(frame, text="Intelligence -1", command=itlMinu)
+itlStat = Label(frame, text = f"Intelligence: {itl}")
+smart = Label(frame, text=f"")
 
 
 #---dexterity---
 
 def dexPlus():
-    global dex, ndex, ap
+    global dex, ndex, ap, acl, bcl, ccl
     if ap != 0:
         ndex += 1
         ap -= 1
         dodgy.config(text=f"+ {ndex}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     else:
         noAp()
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
 def dexMinu():
-    global dex, ndex, ap
+    global dex, ndex, ap, acl, bcl, ccl
     if ndex >= 2:
         ndex -= 1
         ap += 1
         dodgy.config(text=f"+ {ndex}")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     elif ndex == 1:
         ndex -= 1
         ap += 1
         dodgy.config(text=f"")
         atribPoints.config(text=f"Atrribute Points Remaining {ap}")
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
     
 
-dexPls = Button(window, text="Dexterity +1", command=dexPlus)
-dexMin = Button(window, text="Dexterity -1", command=dexMinu)
-dexStat = Label(window, text = f"Dexterity: {dex}")
-dodgy = Label(window, text=f"")
+dexPls = Button(frame, text="Dexterity +1", command=dexPlus)
+dexMin = Button(frame, text="Dexterity -1", command=dexMinu)
+dexStat = Label(frame, text = f"Dexterity: {dex}")
+dodgy = Label(frame, text=f"")
 
 #--------------------------------------
 def atribUp():
 
-    window.columnconfigure((2), weight = 2)
-    window.columnconfigure((1,3,4,5,6), weight = 1)
-    window.rowconfigure((1,2,3,4,5,6,7,8,9), weight = 1)
-    window.rowconfigure(10, minsize= 40 , weight= 1)
+    frame.place(relx=0.5, y=200, anchor="center")
+    frame.grid_propagate(False)
+    frame.columnconfigure((6), weight = 0)
+    frame.columnconfigure((1), weight = 3)
+    frame.columnconfigure((0,2,3,4,5), weight = 1, minsize= 25)
+    frame.rowconfigure((0,1,2,3,4,5,6,7,8,9,10), weight = 1)
+    frame.rowconfigure(11, minsize= 40 , weight= 1)
 
-    atribPoints.grid(column = 1, row = 1, columnspan= 2, sticky = "nw")
+    atribPoints.grid(row = 1, column=0, columnspan= 6)
+    attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
-    streStat.grid(column = 2, row = 2, sticky = "snw")
-    stronk.grid(column = 3, row = 2, sticky = "nsw")
-    strPls.grid(column = 4, row = 2, sticky = "nse")
-    strMin.grid(column = 5, row = 2, sticky = "nsw")
+    streStat.grid(column = 1, row = 2, columnspan= 2, sticky = "w")
+    stronk.grid(column = 4, row = 2)
+    strPls.grid(column = 3, row = 2, sticky = "e")
+    strMin.grid(column = 5, row = 2, sticky = "w")
 
-    dfsStat.grid(column = 2, row = 3, sticky = "nsw")
-    tanky.grid(column = 3, row = 3, sticky = "nsw")
-    dfsPls.grid(column = 4, row = 3, sticky = "nse")
-    dfsMin.grid(column = 5, row = 3, sticky = "nsw")
+    dfsStat.grid(column = 1, row = 3, columnspan= 2, sticky = "w")
+    tanky.grid(column = 4, row = 3,)
+    dfsPls.grid(column = 3, row = 3, sticky = "e")
+    dfsMin.grid(column = 5, row = 3, sticky = "w")
 
-    agiStat.grid(column = 2, row = 4, sticky = "nsw")
-    nimble.grid(column = 3, row = 4, sticky = "nsw")
-    agiPls.grid(column = 4, row = 4, sticky = "nse")
-    agiMin.grid(column = 5, row = 4, sticky = "nsw")
+    agiStat.grid(column = 1, row = 4, columnspan= 2, sticky = "w")
+    nimble.grid(column = 4, row = 4,)
+    agiPls.grid(column = 3, row = 4, sticky = "e")
+    agiMin.grid(column = 5, row = 4, sticky = "w")
 
-    vitStat.grid(column = 2, row = 5, sticky = "nsw")
-    healthy.grid(column = 3, row = 5, sticky = "nsw")
-    vitPls.grid(column = 4, row = 5, sticky = "nse")
-    vitMin.grid(column = 5, row = 5, sticky = "nsw")
+    vitStat.grid(column = 1, row = 5, columnspan= 2, sticky = "w")
+    healthy.grid(column = 4, row = 5,)
+    vitPls.grid(column = 3, row = 5, sticky = "e")
+    vitMin.grid(column = 5, row = 5, sticky = "w")
 
-    itlStat.grid(column = 2, row = 6, sticky = "nsw")
-    smart.grid(column = 3, row = 6, sticky = "nsw")
-    itlPls.grid(column = 4, row = 6, sticky = "nse")
-    itlMin.grid(column = 5, row = 6, sticky = "nsw")
+    itlStat.grid(column = 1, row = 6, columnspan= 2, sticky = "w")
+    smart.grid(column = 4, row = 6,)
+    itlPls.grid(column = 3, row = 6, sticky = "e")
+    itlMin.grid(column = 5, row = 6, sticky = "w")
 
-    dexStat.grid(column = 2, row = 7, sticky = "nsw")
-    dodgy.grid(column = 3, row = 7, sticky = "nsw")
-    dexPls.grid(column = 4, row = 7, sticky = "nse")
-    dexMin.grid(column = 5, row = 7, sticky = "nsw")
-
-start()
-
-window.mainloop()
+    dexStat.grid(column = 1, row = 7, columnspan= 2, sticky = "w")
+    dodgy.grid(column = 4, row = 7,)
+    dexPls.grid(column = 3, row = 7, sticky = "e")
+    dexMin.grid(column = 5, row = 7, sticky = "w")
 
 # --------------------------------------
 
 def AttribConfirm():
-    global ap
+    global ap, acl, bcl, ccl
     attCon.grid_forget()
-    if ap == 0:
-        a = Label(window, text = "Confirm Stats?")
-    elif ap != 1:
-        a = Label(window, text= f"You have {ap} attribute points left, are you sure?")
 
     def yes():
         global stre, dfs, agi, itl, dex, vit, ap
         global nstre, ndfs, nagi, nitl, ndex, nvit, nap
-        dadael(a, b, c, atribPoints, attCon, streStat, stronk, strPls, strMin, dfsStat, tanky, dfsMin, dfsPls, vitStat, vitMin, vitPls, healthy, dexStat, dexPls, dexMin, dodgy, agiStat, agiMin, agiPls, nimble, itlStat, itlPls, itlMin, smart )
+        dadael(acl, bcl, ccl, atribPoints, attCon, streStat, stronk, strPls, strMin, dfsStat, tanky, dfsMin, dfsPls, vitStat, vitMin, vitPls, healthy, dexStat, dexPls, dexMin, dodgy, agiStat, agiMin, agiPls, nimble, itlStat, itlPls, itlMin, smart )
         dfs = dfs + ndfs
         stre = stre + nstre
         agi = agi + nagi
@@ -333,27 +382,43 @@ def AttribConfirm():
         nvit = 0
         nitl = 0
         ndex = 0
+        frame.destroy()
         d = Label(window, text="confirmed")
-        d.grid(column= 2, row= 10, rowspan= 2, sticky= "swe")
+        window.columnconfigure((0,1,2), weight= 1, minsize="100")
+        window.rowconfigure((0,1,2,3,4), weight=1)
+        d.grid(column= 1, row= 1)
         window.after(1500, lambda: dadael(d))
         e = Label(window, text=f"Your Stats are now: \n Strength: {stre} \n Defense: {dfs} \n Agility: {agi} \n Vitality: {vit} \n Intelligence: {itl} \n Dexterity: {dex}")
-        window.after(1500, lambda: e.grid())
+        window.after(1500, lambda: e.grid(column=1, row=1))
 
     def no():
-        dadael(a, b, c)
-        attCon.grid(column= 2, row= 10, rowspan= 2, sticky= "swe")
-   
-    b = Button(window, text = "yes", command=yes)
-    c = Button(window, text= "no", command=no)
+        dadael(acl, bcl, ccl)
+        attCon.grid(row = 10, column = 1, rowspan= 2, sticky= 'w')
 
-    a.grid()
-    b.grid()
-    c.grid()
+    bcl = Button(frame, text = "yes", command=yes)
+    ccl = Button(frame, text= "no", command=no)
+
+    if ap == 0:
+        acl = Label(frame, text = "Confirm Stats?")
+        bcl.grid(column= 2, row= 10, rowspan= 2, sticky= "w", padx= (0,25))
+        ccl.grid(column= 2, row= 10, rowspan= 2)
+    elif ap >= 0:
+        acl = Label(frame, text= f"You have {ap} attribute points left,\n are you sure?")
+        bcl.grid(column= 3, row= 10, rowspan= 2, sticky= "w", padx= (15,0))
+        ccl.grid(column= 3, row= 10, rowspan= 2)
+
+    acl.grid(row = 10, column = 1, rowspan= 2, columnspan=4, sticky= 'w')
 
 
-attCon = Button(window, text="Confirm", command= lambda: AttribConfirm())
+
+attCon = Button(frame, text="Confirm", command= lambda: AttribConfirm())
 
 
+
+
+
+start()
+window.mainloop()
 
 
 """

@@ -2,11 +2,12 @@ from tkinter import *
 import time
 
 #Player Status
-name = "Jack"
+name = ""
 ap = 10
 #-----
 nap = 10
 
+'''
 #Player atributes
 stre = 0 #extra damage you do 
 dfs = 0 #less damage you take
@@ -21,19 +22,22 @@ nagi = 0 #chance of evading a hit
 nvit = 0 #your HP
 nitl = 0 #your mana
 ndex = 0 #your energy
+'''
 
 def dadael(*widgets):
     for widget in widgets:
         widget.destroy()
-
-def gDadael(*widgets):
+def lipat(*widgets):
     for widget in widgets:
-        widget.grid_destroy()
+        widget.grid_forget()
+def wipe():
+    for widget in window.winfo_children():
+        widget.destroy()
 
 window = Tk()
 window.geometry("720x480")
-window.title("[insert game name here]")
 
+'''
 frame = Frame(window, width= "500", height= "300", bg="grey")
 
 welcome = Label(window, text = "Welcome to [insert place]")
@@ -68,7 +72,7 @@ inputButton = Button(window, text = "confirm", command=submitName)
 #inputButton.pack()
 
 # ------ Live update Button ------
-'''
+
 strength = 0
 def strPlus():
     global strength
@@ -90,7 +94,7 @@ stre = Label(window, text=f"Strength = {strength}")
 #strPls.pack()
 #strMin.pack()
 
-'''
+
 #-------------------------------
 acl = Label(window, text="")
 bcl = Label(window, text="")
@@ -436,12 +440,67 @@ def AttribConfirm():
 
 
 attCon = Button(frame, text="Confirm", command= lambda: AttribConfirm())
+'''
 
 
+def Phase2():
+    global name
+    window.columnconfigure((0), weight= 1)
+    window.rowconfigure((0), weight= 1)
+    ccPhotob.place(x=0, y=0, relheight=1, relwidth=1)
+    cc.grid(column= 0, row=0, padx= (180,0), pady= (263,0)) 
+    nameEnter.grid(column= 0, row=0, padx= (408,0), pady= (263,0), ipady=2)
+    charDes.grid(column= 0, row= 0, padx= (346,0), pady= (0,320))
+    Char.grid(column= 0, row= 0, padx= (0,360), pady= (360, 0))
+    bcBut.grid(column= 0, row= 0, padx= (0,555), pady= (360, 0))
+    nxBut.grid(column= 0, row= 0, padx= (0,165), pady= (360, 0))
+    nameOk.grid(column= 0, row= 0, padx= (346,0), pady= (348,0))
 
 
+boy = PhotoImage(file= "boy.png")
+girl = PhotoImage(file= "girl.png")
+ccPhotob = Label(window, image=boy)
+ccPhotog = Label(window, image=girl)
+cc = Label(window, text = "Name: ", font= ("Enchanted Land", 20))
+nameEnter = Entry(window,  font= ("Enchanted Land", 20))
+nameOk = Button(window, text = "Confirm",font=("ancient", 12) , command = lambda: (takeName(), checkName()))
+charDes = Label(window, text = "Character Description is over here", font = ("Enchanted Land", 15), bg = "#5e4004", fg = "white")
 
-atribUp()
+def nextBut():
+    ccPhotob.place_forget()
+    ccPhotog.place(x=0, y=0, relheight=1, relwidth=1)
+def backBut():
+    ccPhotog.place_forget()
+    ccPhotob.place(x=0, y=0, relheight=1, relwidth=1)
+
+Char = Label(window, text="Choose Character", font=("Enchanted Land", 20))
+nxBut = Button(window, text=">", command=nextBut,font=("ancient", 20))
+bcBut = Button(window, text="<", command=backBut,font=("ancient", 20))
+
+def takeName():
+    global name
+    name = nameEnter.get()
+
+def checkName():
+    global name
+    if name == "":
+        def flash(blink):
+            if blink <6:
+                if blink % 2 == 0:
+                    nameEnter.config(bg='red')
+                else:
+                    nameEnter.config(bg='white')
+                window.after(200, lambda: flash(blink + 1))
+        flash(0)
+    else:
+        wipe()
+        attribUp()
+
+
+#Button(window, text=">")
+#Button(window, text="<")
+
+Phase2()
 
 window.mainloop()
 
