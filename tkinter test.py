@@ -36,6 +36,8 @@ def wipe():
 
 window = Tk()
 window.geometry("720x480")
+window.title("Text Based RPG Game")
+window.resizable(False, False)
 
 '''
 frame = Frame(window, width= "500", height= "300", bg="grey")
@@ -452,6 +454,7 @@ def Phase2():
     nameEnter.grid(column= 0, row=0, padx= (408,0), pady= (263,0), ipady=2)
     charDes.grid(column= 0, row= 0, padx= (346,0), pady= (0,320))
     Char.grid(column= 0, row= 0, padx= (0,360), pady= (360, 0))
+    charDes2.grid(column= 0, row= 0, padx= (346,0), pady= (0,120))
     bcBut.grid(column= 0, row= 0, padx= (0,555), pady= (360, 0))
     nxBut.grid(column= 0, row= 0, padx= (0,165), pady= (360, 0))
     nameOk.grid(column= 0, row= 0, padx= (346,0), pady= (348,0))
@@ -464,14 +467,19 @@ ccPhotog = Label(window, image=girl)
 cc = Label(window, text = "Name: ", font= ("Enchanted Land", 20))
 nameEnter = Entry(window,  font= ("Enchanted Land", 20))
 nameOk = Button(window, text = "Confirm",font=("ancient", 12) , command = lambda: (takeName(), checkName()))
-charDes = Label(window, text = "Character Description is over here", font = ("Enchanted Land", 15), bg = "#5e4004", fg = "white")
+charDes = Label(window, text = "Male Character", font = ("Enchanted Land", 15), bg = "#5e4004", fg = "white")
+charDes2 = Label(window, text= "Male Characters get the following \n additional attributes: \n\n +5 strength\n +5 defense\n +20 vitality", font = ("Enchanted Land", 15), bg = "#5e4004", fg = "white")
 
 def nextBut():
     ccPhotob.place_forget()
     ccPhotog.place(x=0, y=0, relheight=1, relwidth=1)
+    charDes.config(text="Female Character")
+    charDes2.config(text="Female Characters get the following \n additional attributes: \n\n +10 agility \n +10 intelligence")
 def backBut():
     ccPhotog.place_forget()
     ccPhotob.place(x=0, y=0, relheight=1, relwidth=1)
+    charDes.config(text="Male Character")
+    charDes2.config(text="Male Characters get the following \n additional attributes: \n\n +5 strength\n +5 defense\n +20 vitality")
 
 Char = Label(window, text="Choose Character", font=("Enchanted Land", 20))
 nxBut = Button(window, text=">", command=nextBut,font=("ancient", 20))

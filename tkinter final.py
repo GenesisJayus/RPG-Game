@@ -33,6 +33,9 @@ frame = Frame(window, width= "500", height= "300", bg="grey")
 def dadael(*widgets):
     for widget in widgets:
         widget.destroy()
+def lipat(*widgets):
+    for widget in widgets:
+        widget.grid_forget()
 
 
 #------Phase 1--------
@@ -41,6 +44,8 @@ def start():
     window.rowconfigure((0,1,2,3,5,6), weight=1)
     wc.grid(column=1, row= 2)
     wcb.grid(column=1, row= 2, sticky = "s", pady= (0,80))
+
+
 
 wp = PhotoImage(file="Intro Screen.png")
 wc = Label(window, image=wp)
@@ -51,20 +56,63 @@ wcb = Button(window, text = "Start Game", font = ("ancient", 20), command = lamb
 #-------2a-------
 
 def Phase2():
-    window.columnconfigure((0,1,2,3,4), weight= 1)
-    window.rowconfigure((0,1,2,3,4,5,6,7,8,9,), weight= 1)
-    ccPhoto.grid(column= 0, row=0)
-    cc.grid(column= 0, row=0, padx= (140,0), pady= (300,0)) 
-    nameEnter.pack(column= 0, row=0)
-    nameOk.pack(column= 0, row=0)
+    global name
+    window.columnconfigure((1,2), weight=0)
+    window.rowconfigure((1,2,3,5,6), weight=0)
+    ccPhotob.place(x=0, y=0, relheight=1, relwidth=1)
+    cc.grid(column= 0, row=0, padx= (180,0), pady= (263,0)) 
+    nameEnter.grid(column= 0, row=0, padx= (408,0), pady= (263,0), ipady=2)
+    charDes.grid(column= 0, row= 0, padx= (346,0), pady= (0,320))
+    Char.grid(column= 0, row= 0, padx= (0,360), pady= (360, 0))
+    charDes2.grid(column= 0, row= 0, padx= (346,0), pady= (0,100))
+    bcBut.grid(column= 0, row= 0, padx= (0,555), pady= (360, 0))
+    nxBut.grid(column= 0, row= 0, padx= (0,165), pady= (360, 0))
+    nameOk.grid(column= 0, row= 0, padx= (346,0), pady= (348,0))
 
 
+boy = PhotoImage(file= "boy.png")
+girl = PhotoImage(file= "girl.png")
+ccPhotob = Label(window, image=boy)
+ccPhotog = Label(window, image=girl)
+cc = Label(window, text = "Name: ", font= ("Enchanted Land", 20))
+nameEnter = Entry(window,  font= ("Enchanted Land", 20))
+nameOk = Button(window, text = "Confirm",font=("ancient", 12) , command = lambda: (takeName(), checkName()))
+charDes = Label(window, text = " Male Character ", font = ("Enchanted Land", 25), bg = "#5e4004", fg = "white")
+charDes2 = Label(window, text= "Male Characters get the following \n additional attributes: \n +5 strength\n +5 defense\n +20 vitality", font = ("Enchanted Land", 20), bg = "#5e4004", fg = "white")
 
-ccp = PhotoImage(file= "Character creation Screen.png")
-ccPhoto = Label(window, image=ccp)
-cc = Label(window, text = "Name: ")
-nameEnter = Entry(window)
-nameOk = Button(window, text = "Confirm", command = lambda: (subName(), dadael(cc, nameEnter, nameOk)))
+def nextBut():
+    ccPhotob.place_forget()
+    ccPhotog.place(x=0, y=0, relheight=1, relwidth=1)
+    charDes.config(text="Female Character")
+    charDes2.config(text="Female Characters get the following \n additional attributes: \n +10 agility \n +10 intelligence")
+def backBut():
+    ccPhotog.place_forget()
+    ccPhotob.place(x=0, y=0, relheight=1, relwidth=1)
+    charDes.config(text=" Male Character ")
+    charDes2.config(text="Male Characters get the following \n additional attributes: \n +5 strength\n +5 defense\n +20 vitality")
+
+Char = Label(window, text="Choose Character", font=("Enchanted Land", 20))
+nxBut = Button(window, text=">", command=nextBut,font=("ancient", 20))
+bcBut = Button(window, text="<", command=backBut,font=("ancient", 20))
+
+def takeName():
+    global name
+    name = nameEnter.get()
+
+def checkName():
+    global name
+    if name == "":
+        def flash(blink):
+            if blink <6:
+                if blink % 2 == 0:
+                    nameEnter.config(bg='red')
+                else:
+                    nameEnter.config(bg='white')
+                window.after(200, lambda: flash(blink + 1))
+        flash(0)
+    else:
+        dadael(ccPhotob, ccPhotog, cc, nameEnter, charDes, charDes2,Char, bcBut, nxBut, nameOk)
+        atribUp()
 
 #-------2b-------
 #-------------------------------
@@ -318,7 +366,6 @@ dodgy = Label(frame, text=f"")
 
 #--------------------------------------
 def atribUp():
-
     frame.place(relx=0.5, y=200, anchor="center")
     frame.grid_propagate(False)
     frame.columnconfigure((6), weight = 0)
