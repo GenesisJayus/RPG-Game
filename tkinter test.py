@@ -373,7 +373,7 @@ def AttribConfirm():
         e = Label(window, text=f"Your Stats are now:", bg= "#d1a87a", font=("Enchanted Land", 30), bd=0)
         f = Label(window, text=f"Strength: {stre} \n Defense: {dfs} \n Agility: {agi} ", bg= "#d1a87a", font=("Enchanted Land", 30), bd=0, justify="right")
         g = Label(window, text=f"Vitality: {vit} \n Intelligence: {itl} \n Dexterity: {dex} ", bg= "#d1a87a", font=("Enchanted Land", 30), bd=0, justify="right")
-        h = Button(window, text="Continue", bg= "#81601c", font=("Ancient", 20), bd=2)
+        h = Button(window, text="Continue", bg= "#81601c", font=("Ancient", 20), bd=2, command=lambda:(dadael(e,f,g,h, AP), story()))
         window.after(1500, lambda: (e.place(relx=0.5, y=110, anchor='center'), f.place(relx=0.3, y=150), g.place(relx=0.5, y=150), h.place(relx=0.5, y=328, anchor='center')))
 
     def no():
@@ -398,12 +398,35 @@ def AttribConfirm():
 
 attCon = Button(window, text="Confirm ->", font=("Old English Text MT", 15), command= lambda: AttribConfirm(), bg = "#81601c", bd=2)
 
+#-------------------
+
+book = PhotoImage(file="pre-game story.png")
+
 def story():
-    print('wait')
+    SBg = Label(window, image=book)
+    SBg.place(x=0, y=0, relheight=1, relwidth=1)
+    a = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "You live in a humble village,\n two day’s journey from the\n nearest city. When the\n village chief sends you and\n several others to get supplies\n for the new season, you\n leave your wife and child\n behind.")
+    b = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text ="Four days later, during your\n return trip, you were intercepted\n by an injured scout from your\n village. He reveals that\n the infamous Iron Chain raided\n your village, killing those\n who resisted and kidnapping\n those who surrendered.")
+    But1 = Button(window, font= ("Ancient", 15), bg = "#5e4004", text=">", command= lambda: (dadael(a,b, But1), c.place(relx=0.28, y=220, anchor='center'), d.place(relx=0.70, y=220, anchor='center'), But2.place(rely=0.5, x=680, anchor='center')))
+    c = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Before the scout can say\n more, arrows from the\n Iron Chain, flew towards you\n killing the scout and some\n of your other companions.\n Luckily for you, your horse\n panicked and carried you\n back to the city.")
+    d = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Now sitting in a bench,\n homeless, alone, and haunted\n by the realization that your\n wife and son was suffering\n while you were enjoying yourself\n within the city walls,\n you swear to avenge those that\n have fallen and were taken away.")
+    But2 = Button(window, font= ("Ancient", 15), bg = "#5e4004", text=">", command= lambda: (dadael(c,d,SBg, But2), Done.place(relx=0.5, rely=0.5, anchor='center')))
+    a.place(relx=0.28, y=220, anchor='center')
+    b.place(relx=0.70, y=220, anchor='center')
+    But1.place(rely=0.5, x=680, anchor='center')
+
+    Done = Label(window, text="Yey, the pre-game system is now done \n we can make it better in the future\nor continue on with the game")
+    
+
+'''
+
+'''
 
 
 
-atribUp()
+
+
+story()
 
 window.mainloop()
 
