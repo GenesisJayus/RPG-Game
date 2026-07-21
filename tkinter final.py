@@ -462,13 +462,16 @@ def AttribConfirm():
         nitl = 0
         ndex = 0
         frame.destroy()
-        d = Label(window, text="confirmed")
+        d = Label(window, text="confirmed", bg= "#d1a87a", font=("Enchanted Land", 40), bd=0)
         window.columnconfigure((0,1,2), weight= 1, minsize="100")
         window.rowconfigure((0,1,2,3,4), weight=1)
         d.grid(column= 1, row= 1)
         window.after(1500, lambda: dadael(d))
-        e = Label(window, text=f"Your Stats are now: \n Strength: {stre} \n Defense: {dfs} \n Agility: {agi} \n Vitality: {vit} \n Intelligence: {itl} \n Dexterity: {dex}")
-        window.after(1500, lambda: e.grid(column=1, row=1))
+        e = Label(window, text=f"Your Stats are now:", bg= "#d1a87a", font=("Enchanted Land", 30), bd=0)
+        f = Label(window, text=f"Strength: {stre} \n Defense: {dfs} \n Agility: {agi} ", bg= "#d1a87a", font=("Enchanted Land", 30), bd=0, justify="right")
+        g = Label(window, text=f"Vitality: {vit} \n Intelligence: {itl} \n Dexterity: {dex} ", bg= "#d1a87a", font=("Enchanted Land", 30), bd=0, justify="right")
+        h = Button(window, text="Continue", bg= "#81601c", font=("Ancient", 20), bd=2)
+        window.after(1500, lambda: (e.place(relx=0.5, y=110, anchor='center'), f.place(relx=0.3, y=150), g.place(relx=0.5, y=150), h.place(relx=0.5, y=328, anchor='center')))
 
     def no():
         dadael(acl, bcl, ccl)
@@ -490,9 +493,14 @@ def AttribConfirm():
 
     acl.place(relx=0.5, y=348, anchor='center')
 
-
 attCon = Button(window, text="Confirm ->", font=("Old English Text MT", 15), command= lambda: AttribConfirm(), bg = "#81601c", bd=2)
 
+def story():
+    print('wait')
+
+
+
+    
 start()
 window.mainloop()
 
@@ -501,7 +509,7 @@ window.mainloop()
 Phase 1 = Welcome screen, welcomes player /
 Phase 2 = character creation 
     2a - name of character /
-    2b - attributes 
+    2b - attributes /
     2c - story line **
 Phase 3 = game start **
 """
