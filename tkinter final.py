@@ -76,7 +76,7 @@ ccPhotob = Label(window, image=boy)
 ccPhotog = Label(window, image=girl)
 cc = Label(window, text = "Name: ", font= ("Enchanted Land", 20))
 nameEnter = Entry(window,  font= ("Enchanted Land", 20))
-nameOk = Button(window, text = "Confirm",font=("ancient", 12) , command = lambda: (takeName(), Gender_Attribute(), checkName()))
+nameOk = Button(window, text = "Confirm",font=("ancient", 12) , command = lambda: (takeName(), checkName()))
 charDes = Label(window, text = " Male Character ", font = ("Enchanted Land", 25), bg = "#5e4004", fg = "white")
 charDes2 = Label(window, text= "Male Characters get the following \n additional attributes: \n +5 strength\n +5 defense\n +20 vitality", font = ("Enchanted Land", 20), bg = "#5e4004", fg = "white")
 
@@ -103,6 +103,28 @@ def takeName():
     global name
     name = nameEnter.get()
 
+def confirmName():
+    global name 
+    lipat(cc, nameEnter, nameOk)
+    
+    def yes():
+        Gender_Attribute()
+        dadael(ccPhotob, ccPhotog, charDes, charDes2,Char, bcBut, nxBut, confirmation, Y, N)
+        atribUp()
+    def no():
+        lipat(confirmation, Y, N)
+        nameOk.grid(column= 0, row= 0, padx= (346,0), pady= (348,0))
+        cc.grid(column= 0, row=0, padx= (180,0), pady= (263,0)) 
+        nameEnter.grid(column= 0, row=0, padx= (408,0), pady= (263,0), ipady=2)
+
+    confirmation = Label(window, text=f"Your name is '{name}',\n You cannot change this later.", font= ("Ancient", 15))
+    Y = Button(window, text = "yes",font=("ancient", 12) , command = yes)
+    N = Button(window, text = "no",font=("ancient", 12) , command = no)
+    confirmation.grid(column= 0, row=0, padx= (345, 0), pady= (265,0), ipady=2)
+    Y.grid(column= 0, row= 0, padx= (306,0), pady= (360,0))
+    N.grid(column= 0, row= 0, padx= (386,0), pady= (360,0))
+
+
 def checkName():
     global name
     if name == "":
@@ -115,8 +137,7 @@ def checkName():
                 window.after(200, lambda: flash(blink + 1))
         flash(0)
     else:
-        dadael(ccPhotob, ccPhotog, cc, nameEnter, charDes, charDes2,Char, bcBut, nxBut, nameOk)
-        atribUp()
+        confirmName()
 
 def Gender_Attribute():
     global GenAttr, stre, dfs, agi, vit, itl
@@ -502,11 +523,19 @@ book = PhotoImage(file="pre-game story.png")
 def story():
     SBg = Label(window, image=book)
     SBg.place(x=0, y=0, relheight=1, relwidth=1)
-    a = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "You live in a humble village,\n two day’s journey from the\n nearest city. When the\n village chief sends you and\n several others to get supplies\n for the new season, you\n leave your wife and child\n behind.")
-    b = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text ="Four days later, during your\n return trip, you were intercepted\n by an injured scout from your\n village. He reveals that\n the infamous Iron Chain raided\n your village, killing those\n who resisted and kidnapping\n those who surrendered.")
+    if GenAttr:
+        a = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "You live in a humble village,\n two day’s journey from the\n nearest city. When the\n village chief sends you and\n several others to get supplies\n for the new season, you\n leave your wife and child\n behind.")
+        b = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text ="Four days later, during your\n return trip, you were intercepted\n by an injured scout from your\n village. He reveals that\n the infamous Iron Chain raided\n your village, killing those\n who resisted and kidnapping\n those who surrendered.")
+        c = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Before the scout can say\n more, arrows from the\n Iron Chain, flew towards you\n killing the scout and some\n of your other companions.\n Luckily for you, your horse\n panicked and carried you\n back to the city.")
+        d = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Now sitting in a bench,\n homeless, alone, and haunted\n by the realization that your\n wife and son was suffering\n while you were enjoying yourself\n within the city walls,\n you swear to avenge those that\n have fallen and were taken away.")
+    else:
+        a = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "You live in a humble village,\n two day’s journey from the\n nearest city. When the\n village chief sends you and\n several others to get supplies\n for the new season, you\n leave your son and daughter \n behind.")
+        b = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text ="Four days later, during your\n return trip, you were intercepted\n by an injured scout from your\n village. He reveals that\n the infamous Iron Chain raided\n your village, killing those\n who resisted and kidnapping\n those who surrendered.")
+        c = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Before the scout can say\n more, arrows from the\n Iron Chain, flew towards you\n killing the scout and some\n of your other companions.\n Luckily for you, your horse\n panicked and carried you\n back to the city.")
+        d = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Now sitting in a bench,\n homeless, alone, and haunted\n by the realization that your\n children were suffering\n while you were enjoying yourself\n within the city walls,\n you swear to avenge those that\n have fallen and were taken away.")
+
     But1 = Button(window, font= ("Ancient", 15), bg = "#5e4004", text=">", command= lambda: (dadael(a,b, But1), c.place(relx=0.28, y=220, anchor='center'), d.place(relx=0.70, y=220, anchor='center'), But2.place(rely=0.5, x=680, anchor='center')))
-    c = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Before the scout can say\n more, arrows from the\n Iron Chain, flew towards you\n killing the scout and some\n of your other companions.\n Luckily for you, your horse\n panicked and carried you\n back to the city.")
-    d = Label(window, font=("Enchanted Land", 24), bg="#e8dfa4", justify="right", text = "Now sitting in a bench,\n homeless, alone, and haunted\n by the realization that your\n wife and son was suffering\n while you were enjoying yourself\n within the city walls,\n you swear to avenge those that\n have fallen and were taken away.")
+    
     But2 = Button(window, font= ("Ancient", 15), bg = "#5e4004", text=">", command= lambda: (dadael(c,d,SBg, But2), Done.place(relx=0.5, rely=0.5, anchor='center')))
     a.place(relx=0.28, y=220, anchor='center')
     b.place(relx=0.70, y=220, anchor='center')
